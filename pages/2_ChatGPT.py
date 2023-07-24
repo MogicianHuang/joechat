@@ -41,7 +41,7 @@ temperature = col2.slider(
 
 if 'llm_chain' not in st.session_state or st.session_state.ChangeModel:
     st.session_state.llm_chain = LLMChain(
-        llm=ChatOpenAI(model=model,streaming=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()])), 
+        llm=ChatOpenAI(model=model,streaming=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]),openai_api_key=st.session_state["openai_api_key"], openai_api_base=st.session_state["openai_api_base"]), 
         prompt=prompt,
         verbose=True, 
         memory=memory,
