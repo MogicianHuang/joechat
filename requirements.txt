@@ -9,3 +9,4 @@ wikipedia
 google-api-python-client
 google-search-results
 wolframalpha
+pypdf
