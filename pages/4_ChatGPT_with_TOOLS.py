@@ -17,6 +17,7 @@ from langchain.memory import ConversationBufferMemory
 
 st.write("## 向带有工具的ChatGPT提问")
 st.write("### GPT可以更精准地回答问题")
+use_chinese = st.checkbox('用中文回答')
 if 'ChangeModel' not in st.session_state:
     st.session_state.ChangeModel = False
 def change_model():
@@ -117,6 +118,8 @@ prompt_text = st.chat_input(f"向{model}进行提问")
 
 
 if prompt_text:
+    if use_chinese:
+        prompt_text = prompt_text + " 请你用中文回答以上问题。"
     input_placeholder.markdown(prompt_text)
     history = st.session_state.tool_history
     res = agent.run(prompt_text)

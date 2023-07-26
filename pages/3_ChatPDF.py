@@ -72,8 +72,8 @@ if data is not None:
     texts = text_splitter.split_documents(data)
     texts_num = len(texts)
     pinecone.init(      
-	    api_key='e925f997-8123-4e0d-9c75-b93fa4b78a05',      
-	    environment='asia-southeast1-gcp-free'      
+	    api_key=os.environ["pinecone_api_key"],      
+	    environment=os.environ["pinecone_env"]     
     )      
     index_name = "joehuang"
 
