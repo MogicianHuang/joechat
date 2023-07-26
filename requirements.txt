@@ -4,9 +4,6 @@ pinecone_client==2.2.2
 pydantic==1.10.11
 PyPDF2==3.0.1
 streamlit==1.24.1
-<<<<<<< HEAD
-openai
-=======
 openai
 wikipedia
 google-api-python-client
@@ -14,4 +11,3 @@ google-search-results
 wolframalpha
 pypdf
 tiktoken
->>>>>>> af722f205205571a584f70be46fde3f2f4e2f2ae
