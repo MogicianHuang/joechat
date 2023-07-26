@@ -32,33 +32,30 @@ temperature = col2.slider(
     'temperature', 0.0, 1.0, 0.8, step=0.01
 )
 
-if 'inited' not in st.session_state:
-    st.session_state.inited = False
 ### initialize
-if st.session_state.inited == False:
-    translator1=Translator(from_lang="chinese",to_lang="english")
-    translator2=Translator(from_lang="english",to_lang="chinese")
-    python_repl = PythonREPL()
-    wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-    googlesearch = GoogleSearchAPIWrapper(google_api_key=st.session_state.GOOGLE_API_KEY,google_cse_id=st.session_state.GOOGLE_CSE_ID)
-    llm = ChatOpenAI(temperature=0,model=model,openai_api_base=st.session_state.openai_api_base,openai_api_key=st.session_state.openai_api_key)
-    search = SerpAPIWrapper(serpapi_api_key=st.session_state.serpapi_api_key)
-    wolfram = WolframAlphaAPIWrapper(wolfram_alpha_appid=st.session_state.WOLFRAM_ALPHA_APPID)
-    memory = ConversationBufferMemory(memory_key="chattools_history")
-    llm_math_chain = LLMMathChain(llm=llm, verbose=True,memory=memory)
-    st.session_state.inited = True
-    tools = [
-        Tool(
-            name="Google Search",
-            description="Search Google for recent results.It's cheap and fast and you should use it before using the Search tool",
-            func=googlesearch.run,
-        ),
-        Tool.from_function(
-            func=search.run,
-            name="Search",
-            description="useful for when you need to answer questions about current events"
+translator1=Translator(from_lang="chinese",to_lang="english")
+translator2=Translator(from_lang="english",to_lang="chinese")
+python_repl = PythonREPL()
+wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+googlesearch = GoogleSearchAPIWrapper(google_api_key=st.session_state.GOOGLE_API_KEY,google_cse_id=st.session_state.GOOGLE_CSE_ID)
+llm = ChatOpenAI(temperature=0,model=model,openai_api_base=st.session_state.openai_api_base,openai_api_key=st.session_state.openai_api_key)
+search = SerpAPIWrapper(serpapi_api_key=st.session_state.serpapi_api_key)
+wolfram = WolframAlphaAPIWrapper(wolfram_alpha_appid=st.session_state.WOLFRAM_ALPHA_APPID)
+memory = ConversationBufferMemory(memory_key="chattools_history")
+llm_math_chain = LLMMathChain(llm=llm, verbose=True,memory=memory)
+st.session_state.inited = True
+tools = [
+    Tool(
+        name="Google Search",
+        description="Search Google for recent results.It's cheap and fast and you should use it before using the Search tool",
+        func=googlesearch.run,
+    ),
+    Tool.from_function(
+        func=search.run,
+        name="Search",
+        description="useful for when you need to answer questions about current events"
             # coroutine= ... <- you can specify an async method if desired as well
-        ),
+    ),
         # Tool.from_function(
         #     func=llm_math_chain.run,
         #     name="Calculator",
@@ -67,28 +64,28 @@ if st.session_state.inited == False:
         #     # coroutine= ... <- you can specify an async method if desired as well
         # ),
         
-        Tool(
-            name="Wikipedia Search",
-            description="Search Wikipedia for recent results. It's a good idea to use this tool before using the Google Search tool.",
-            func=wikipedia.run,
-        ),
-        Tool(
-            name="Wolfram Alpha",
-            description="Wolfram Alpha is a computational knowledge engine. It's useful for answering questions about math, science, and more. If other tools fail, try this one.",
-            func=wolfram.run,
-        ),
-        Tool(
-            name="python_repl",
-            description="A Python shell. Use this to execute python commands. Input should be a valid python command. If you want to see the output of a value, you should print it out with `print(...)`.",
-            func=python_repl.run
-        )
-    ]
-    llm = ChatOpenAI(temperature=0,model=model,openai_api_base=st.session_state.openai_api_base,openai_api_key=st.session_state.openai_api_key)
-    agent = initialize_agent(
-        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True,handle_parsing_errors=True,
+    Tool(
+        name="Wikipedia Search",
+        description="Search Wikipedia for recent results. It's a good idea to use this tool before using the Google Search tool.",
+        func=wikipedia.run,
+    ),
+    Tool(
+        name="Wolfram Alpha",
+        description="Wolfram Alpha is a computational knowledge engine. It's useful for answering questions about math, science, and more. If other tools fail, try this one.",
+        func=wolfram.run,
+    ),
+    Tool(
+        name="python_repl",
+        description="A Python shell. Use this to execute python commands. Input should be a valid python command. If you want to see the output of a value, you should print it out with `print(...)`.",
+        func=python_repl.run
     )
-    class CalculatorInput(BaseModel):
-        question: str = Field()
+]
+llm = ChatOpenAI(temperature=0,model=model,openai_api_base=st.session_state.openai_api_base,openai_api_key=st.session_state.openai_api_key)
+agent = initialize_agent(
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True,handle_parsing_errors=True,
+)
+class CalculatorInput(BaseModel):
+    question: str = Field()
 
 
 if  st.session_state.ChangeModel:
