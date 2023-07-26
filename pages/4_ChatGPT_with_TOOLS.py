@@ -79,7 +79,7 @@ tools = [
 ]
 llm = ChatOpenAI(temperature=0,model=model,openai_api_base=st.session_state.openai_api_base,openai_api_key=st.session_state.openai_api_key)
 agent = initialize_agent(
-    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True,handle_parsing_errors=True,
 )
 
 class CalculatorInput(BaseModel):
