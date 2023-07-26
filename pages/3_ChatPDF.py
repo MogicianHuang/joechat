@@ -64,11 +64,13 @@ else:
         data = uploaded_file.load()
         if data is not None:
             st.sidebar.success("文件下载成功")
-        
+
 ### load data to pinecone
 if data is not None:
+    docs_num = len(data)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=0)
     texts = text_splitter.split_documents(data)
+    texts_num = len(texts)
     pinecone.init(      
 	    api_key='e925f997-8123-4e0d-9c75-b93fa4b78a05',      
 	    environment='asia-southeast1-gcp-free'      
@@ -86,12 +88,13 @@ if data is not None:
 if docsearch is not None:
     human_query = st.chat_input(f"向{model}进行提问")
     with st.chat_message(name="assistant", avatar="assistant"):
-        message_placeholder = st.info("文件分析完成，开始提问吧！")
+        message_placeholder = st.info(f"文件分析完成，文章共有{docs_num}页，共分为了{texts_num}段，开始提问吧！")
 for i, (query, response) in enumerate(st.session_state.pdf_history):
     with st.chat_message(name="user", avatar="user"):
         st.markdown(query)
     with st.chat_message(name="assistant", avatar="assistant"):
         st.markdown(response)
+
 with st.chat_message(name="user", avatar="user"):
     input_placeholder = st.empty()
 if human_query is not None:    
@@ -99,6 +102,7 @@ if human_query is not None:
 
 if llm is None or st.session_state.ChangePdfModel:
     llm = ChatOpenAI(temperature=temperature, openai_api_key=st.session_state["openai_api_key"], openai_api_base=st.session_state["openai_api_base"],model=model)
+    st.session_state.ChangePdfModel = False
 
 if human_query is not None and docsearch is not None:
     history = st.session_state.pdf_history

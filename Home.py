@@ -21,31 +21,31 @@ st.markdown(
 )
 
 if 'openai_api_base' not in st.session_state:
-    st.session_state["openai_api_base"] = "https://api.chatanywhere.com.cn/v1"
+    st.session_state["openai_api_base"] = os.environ.get('openai_api_base')
 
 if 'openai_api_key' not in st.session_state:
-    st.session_state["openai_api_key"] = "sk-vNqpgXJo1vbxT0o2ptSoNPOethD2zaSdCN8gh53sPWOUOERl"
+    st.session_state["openai_api_key"] = os.environ.get('openai_api_key')
 
 if 'serpapi_api_key' not in st.session_state:
-    st.session_state["serpapi_api_key"] = "bb1b0a0f24b65e16dbba02f81612706455fe405d34d3df36afc3e8298bb3fccc"
+    st.session_state["serpapi_api_key"] = os.environ.get('serpapi_api_key')
 
 if 'WolframAlpha_api_key' not in st.session_state:
-    st.session_state["WolframAlpha_api_key"] = "PK46XL-8QKAATJVJJ"
+    st.session_state["WolframAlpha_api_key"] = os.environ.get('WolframAlpha_api_key')
 
 if 'pinecone_api_key' not in st.session_state:
-    st.session_state["pinecone_api_key"] = 'e925f997-8123-4e0d-9c75-b93fa4b78a05'
+    st.session_state["pinecone_api_key"] = os.environ.get('pinecone_api_key')
 
 if 'pinecone_env' not in st.session_state:
-    st.session_state["pinecone_env"] = 'asia-southeast1-gcp-free' 
+    st.session_state["pinecone_env"] = os.environ.get('pinecone_env')
 
 if 'temperature' not in st.session_state:
     st.session_state["temperature"] = 0.8
 
 if 'GOOGLE_CSE_ID' not in st.session_state:
-    st.session_state["GOOGLE_CSE_ID"] = "d2d730b968ad74de6"
+    st.session_state["GOOGLE_CSE_ID"] = os.environ.get('GOOGLE_CSE_ID')
 
 if 'GOOGLE_API_KEY' not in st.session_state:
-    st.session_state["GOOGLE_API_KEY"] = "AIzaSyDAqklhqHg7bf5boWvlrzz-AUFUnYxahmE"
+    st.session_state["GOOGLE_API_KEY"] = os.environ.get('GOOGLE_API_KEY')
 
 if 'WOLFRAM_ALPHA_APPID' not in st.session_state:
-    st.session_state["WOLFRAM_ALPHA_APPID"] = "PK46XL-8QKAATJVJJ"
+    st.session_state["WOLFRAM_ALPHA_APPID"] = os.environ.get('WOLFRAM_ALPHA_APPID')
